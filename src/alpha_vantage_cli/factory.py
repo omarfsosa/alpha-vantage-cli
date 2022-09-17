@@ -32,7 +32,7 @@ def parse_options(names: OptionNames) -> tuple[str]:
     return tuple(names)
 
 
-def handle_values(d: dict[str, Any]) -> dict[str, Any]:
+def handle_values(d: dict[str, str]) -> dict[str, str]:
     if "symbol" in d:
         d["symbol"] = d["symbol"].upper()
 
@@ -57,7 +57,7 @@ def command_factory(
         elif d.get("datatype") == "csv":
             result = response.text
         else:
-            raise ValueError("Missing datatype")
+            result = response
 
         click.echo(result)
 

@@ -28,6 +28,19 @@ nox = "^2022.8.7"
 flake8 = "^5.0.4"
 isort = "^5.10.1"
 mypy = "^0.971"
+coverage = {extras = ["toml"], version = "^6.4.4"}
+pytest-cov = "^3.0.0"
+pytest-mock = "^3.8.2"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["alpha_vantage_cli"]
+
+[tool.coverage.report]
+show_missing = true
 
 [build-system]
 requires = ["poetry-core"]

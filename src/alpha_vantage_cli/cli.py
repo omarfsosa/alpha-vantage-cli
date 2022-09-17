@@ -29,7 +29,7 @@ def stock():
     """
 
 
-stock.command(
+stock_intraday = stock.command(
     "intraday",
     help="""
     SYMBOL is the name of the equity of your choice. For example, IBM, APPL"
@@ -56,7 +56,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_quote = stock.command(
     "quote",
     help="""
     Quote information for SYMBOL (IBM, APPL, etc.).
@@ -74,7 +74,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_daily = stock.command(
     "daily",
     help="""
     Daily, as-traded time series data for SYMBOL
@@ -96,7 +96,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_daily_adjusted = stock.command(
     "daily-adjusted",
     help="""
     Daily adjusted, as-traded time series data for SYMBOL.
@@ -115,7 +115,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_weekly = stock.command(
     "weekly",
     help="""
     Weekly time series data for SYMBOL.
@@ -134,7 +134,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_weekly_adjusted = stock.command(
     "weekly-adjusted",
     help="""
     Weekly adjusted time series data for SYMBOL.
@@ -154,7 +154,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_monthly = stock.command(
     "monthly",
     help="""
     Monthly time series data for SYMBOL.
@@ -173,7 +173,7 @@ stock.command(
     )
 )
 
-stock.command(
+stock_monthly_adjusted = stock.command(
     "monthly-adjusted",
     help="""
     Monthly adjusted time series data for SYMBOL.
