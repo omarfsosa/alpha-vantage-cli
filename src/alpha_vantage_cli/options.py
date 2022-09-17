@@ -1,19 +1,15 @@
 import click
 
-
-symbol = click.option(
-    "--symbol",
-    "-s",
+symbol = click.argument(
+    "symbol",
     type=str,
     required=True,
-    help="The name of the equity of your choice. For example, IBM, APPL",
 )
 
 interval = click.option(
     "--interval",
     "-i",
     type=click.Choice(["1", "5", "15", "30", "60"]),
-    required=False,
     default="60",
     help=(
         "Time interval (in minutes) between two consecutive data points in"
@@ -31,9 +27,23 @@ adjusted = click.option(
 )
 
 outputsize = click.option(
-    "--outputsize", type=click.Choice(["compact", "full"]), default="compact"
+    "--outputsize",
+    type=click.Choice(["compact", "full"]),
+    default="compact",
+    help="Compact by default. This returns only the latest 100 data points "
+    "in the time series;  using --outputsize=full returns the full-length"
+    " time series. The compact option is recommended if you would like to "
+    "reduce the data size of each API call.",
 )
 
 datatype = click.option(
-    "--datatype", type=click.Choice(["json", "csv"]), default="json"
+    "--datatype",
+    type=click.Choice(["json", "csv"]),
+    default="json",
+    help="""
+    By default, --datatype=json. Strings json and csv are accepted with the
+    following specifications: --datatype=json returns the time series in JSON
+    format; --datatype=csv returns the time series as a CSV (comma separated
+    value) file.
+    """,
 )

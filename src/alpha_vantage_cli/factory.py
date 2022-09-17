@@ -1,47 +1,55 @@
+from typing import Any, Iterable
+
 import click
 import requests
 
 from alpha_vantage_cli import options
 
-
 _base_url = "https://www.alphavantage.co/query?"
+OptionNames = str | Iterable[str]
+OptionValues = dict[str, Any]
 
 
-def _fixes(**kwargs):
+def _fixes(**kwargs) -> str:
     return "&".join(f"{k}={v}" for k, v in kwargs.items())
 
 
-def _allows(*args):
+def _allows(*args) -> str:
     return "&" + "&".join(f"{k!s}={{{k}}}" for k in args)
 
 
-def make_query_string(*args, **kwargs):
+def make_query_string(*args, **kwargs) -> str:
     return _base_url + _fixes(**kwargs) + _allows(*args)
 
 
-def parse_identifiers(names):
+def parse_options(names: OptionNames) -> tuple[str]:
     if isinstance(names, str):
         names = names.replace(",", " ").split()
+
+    if not all(hasattr(options, name) for name in names):
+        raise ValueError("Names must all be valid options")
 
     return tuple(names)
 
 
-def handle_inputs(dict_):
-    if "symbol" in dict_:
-        dict_["symbol"] = dict_["symbol"].upper()
+def handle_values(d: dict[str, Any]) -> dict[str, Any]:
+    if "symbol" in d:
+        d["symbol"] = d["symbol"].upper()
 
-    if "interval" in dict_:
-        dict_["interval"] = dict_["interval"] + "min"
+    if "interval" in d:
+        d["interval"] = d["interval"] + "min"
 
-    return dict_
+    return d
 
 
-def command_factory(field_names, **fixed_fields):
-    names = parse_identifiers(field_names)
-    query_fmt = make_query_string(*names, **fixed_fields)
+def command_factory(
+    option_names: OptionNames, option_values: OptionValues
+) -> callable:
+    names = parse_options(option_names)
+    query_fmt = make_query_string(*names, **option_values)
 
     def command(**kwargs):
-        d = handle_inputs(kwargs)
+        d = handle_values(kwargs)
         query = query_fmt.format(**d)
         response = requests.get(query)
         if d.get("datatype") == "json":
@@ -55,6 +63,6 @@ def command_factory(field_names, **fixed_fields):
 
     for name in reversed(names):
         decorator = getattr(options, name)
-        cmd = decorator(command)
+        command = decorator(command)
 
-    return cmd
+    return command
