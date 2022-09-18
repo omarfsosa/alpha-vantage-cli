@@ -12,7 +12,7 @@ ensure_newline_before_comments = true
 name = "alpha-vantage-cli"
 version = "0.1.0"
 description = ""
-authors = ["Omar Sosa <omarfsosa@gmail.com>"]
+authors = ["Omar Sosa Rodriguez <omarfsosa@gmail.com>"]
 readme = "README.md"
 license = "MIT"
 packages = [{include = "alpha_vantage_cli", from = "src"}]
