@@ -1,7 +1,9 @@
-# WIP: Command line interface for Alpha Vantage APIs
+# Command line interface for Alpha Vantage APIs (WIP)
 
-Work in progress.
+Command line interface to get stock data from the Alpha Vantage API
 
+Alpha Vantage offers an API for financial data and other popular finance indicators. 
+This library provides a series of commands that you can use to query the API from your terminal in an easy way.
 
 ###  Getting started
 
@@ -43,13 +45,14 @@ Options:
   --help     Show this message and exit.
 
 Commands:
-  crypto  Manages the Cryptocurrences APIs (Not yet implemented)
-  data    Manages the Fundamental Data APIs (Not yet implemented)
-  econ    Manages the Economic Indicators APIs (Not yet implemented)
-  forex   Manages the Forex APIs (Not yet implemented)
-  intel   Manages the Alpha Intelligence APIs (Not yet implemented)
-  stock   Manages the Core Stocks APIs
-  tech    Manages the Technical Indicators APIs (Not yet implemented)
+  crypto   Manages the Cryptocurrences APIs (Not yet implemented)
+  data     Manages the Fundamental Data APIs (Not yet implemented)
+  econ     Manages the Economic Indicators APIs (Not yet implemented)
+  forex    Manages the Forex APIs (Not yet implemented)
+  intel    Manages the Alpha Intelligence APIs (Not yet implemented)
+  set-key  Set your API key so that you can send requests to Alpha...
+  stock    Manages the Core Stocks APIs
+  tech     Manages the Technical Indicators APIs (Not yet implemented)
 ```
 
 

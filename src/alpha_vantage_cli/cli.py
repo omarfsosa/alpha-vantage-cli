@@ -1,4 +1,3 @@
-import functools
 import json
 import pathlib
 
@@ -11,7 +10,6 @@ def _get_path_credentials():
     return pathlib.Path.home() / ".alpha-vantage" / "credentials.json"
 
 
-@functools.lru_cache
 def _get_api_key():
     filepath = _get_path_credentials()
     with open(filepath) as f:
@@ -30,7 +28,13 @@ def cli():
     """
 
 
-@cli.command(name="set-key")
+@cli.command(
+    name="set-key",
+    help="""
+    Set your API key so that you can send requests to Alpha Vantage's API. To
+    request an API key visit https://www.alphavantage.co/support/#api-key
+    """,
+)
 @click.option("--key", prompt=True, hide_input=True)
 def set_key(key):
     path_save = _get_path_credentials()
@@ -57,7 +61,7 @@ def stock():
 stock_intraday = stock.command(
     "intraday",
     help="""
-    SYMBOL is the name of the equity of your choice. For example, IBM, APPL"
+    SYMBOL is the name of the equity of your choice. For example, IBM, AAPL"
 
     This API returns intraday time series of the equity specified, covering
     extended trading hours where applicable (e.g., 4:00am to 8:00pm Eastern
@@ -84,7 +88,7 @@ stock_intraday = stock.command(
 stock_quote = stock.command(
     "quote",
     help="""
-    Quote information for SYMBOL (IBM, APPL, etc.).
+    Quote information for SYMBOL (IBM, AAPL, etc.).
 
     A lightweight alternative to the time series APIs, this service returns
     the price and volume information for a token of your choice.
