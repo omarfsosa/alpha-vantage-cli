@@ -3,9 +3,24 @@
 Work in progress.
 
 
-##  Get a Free Alpha Vantage Key
+###  Getting started
 
-Visit http://www.alphavantage.co/support/#api-key
+Get an alpha vantage free api key. Visit http://www.alphavantage.co/support/#api-key
+
+Install ``alpha-vantage-cli``:
+```bash
+pip install alpha-vantage-cli
+```
+
+Set your api key:
+```
+av set-key
+```
+
+Try it out:
+```bash
+av stock quote ibm
+```
 
 
 ## Usage examples
