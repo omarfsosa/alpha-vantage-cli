@@ -1,9 +1,9 @@
-name: Tests
+name: CI
 
 on: [push]
 
 jobs:
-  test:
+  ci:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -27,6 +27,9 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
       - name: View poetry --help
         run: poetry --help
-      - name: Run tests
+      - name: Linting
         run: |
-          nox -s tests-${{ matrix.python-version }}
+          nox -s lint
+      - name: Testing
+        run: |
+          nox -s test-${{ matrix.python-version }}
