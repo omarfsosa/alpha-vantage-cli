@@ -10,7 +10,7 @@ ensure_newline_before_comments = true
 
 [tool.poetry]
 name = "alpha-vantage-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Omar Sosa Rodriguez <omarfsosa@gmail.com>"]
 readme = "README.md"
