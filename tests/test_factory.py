@@ -44,5 +44,9 @@ def test_command_factory():
         "function": "FUNCTION_NAME",
         "apikey": "testkey",
     }
-    command = factory.command_factory(option_names, option_values)
+    command = factory.command_factory(
+        option_names,
+        option_values,
+        api_key_func=lambda: "",
+    )
     assert callable(command)

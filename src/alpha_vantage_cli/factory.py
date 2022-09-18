@@ -43,13 +43,16 @@ def handle_values(d: dict[str, str]) -> dict[str, str]:
 
 
 def command_factory(
-    option_names: OptionNames, option_values: OptionValues
+    option_names: OptionNames,
+    option_values: OptionValues,
+    api_key_func: callable,
 ) -> callable:
     names = parse_options(option_names)
-    query_fmt = make_query_string(*names, **option_values)
+    query_fmt = make_query_string("apikey", *names, **option_values)
 
     def command(**kwargs):
         d = handle_values(kwargs)
+        d["apikey"] = api_key_func()
         query = query_fmt.format(**d)
         response = requests.get(query)
         if d.get("datatype") == "json":

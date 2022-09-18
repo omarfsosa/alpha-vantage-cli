@@ -1,14 +1,23 @@
-import os
+import functools
+import json
+import pathlib
 
 import click
 
 from . import factory
 
-KEY_ENV_NAME = "ALPHA_VANTAGE_KEY"
+
+def _get_path_credentials():
+    return pathlib.Path.home() / ".alpha-vantage" / "credentials.json"
 
 
-def _key():
-    return os.environ[KEY_ENV_NAME]
+@functools.lru_cache
+def _get_api_key():
+    filepath = _get_path_credentials()
+    with open(filepath) as f:
+        credentials = json.load(f)
+
+    return credentials["key"]
 
 
 @click.group()
@@ -19,6 +28,22 @@ def cli():
 
     Get stocks data from the command line.
     """
+
+
+@cli.command(name="set-key")
+@click.option("--key", prompt=True, hide_input=True)
+def set_key(key):
+    path_save = _get_path_credentials()
+    click.confirm(
+        text=(
+            f"Credentials will be stored at {path_save!s}.\n"
+            "Do you wish to continue?"
+        ),
+        abort=True,
+    )
+    credentials = {"key": key}
+    with open(path_save, "w") as f:
+        json.dump(credentials, f)
 
 
 # --- Core Stocks APIs
@@ -51,8 +76,8 @@ stock_intraday = stock.command(
         option_names="symbol interval adjusted outputsize datatype",
         option_values=dict(
             function="TIME_SERIES_INTRADAY",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -69,8 +94,8 @@ stock_quote = stock.command(
         option_names="symbol datatype",
         option_values=dict(
             function="GLOBAL_QUOTE",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -91,8 +116,8 @@ stock_daily = stock.command(
         option_names="symbol outputsize datatype",
         option_values=dict(
             function="TIME_SERIES_DAILY",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -110,8 +135,8 @@ stock_daily_adjusted = stock.command(
         option_names="symbol outputsize datatype",
         option_values=dict(
             function="TIME_SERIES_DAILY_ADJUSTED",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -129,8 +154,8 @@ stock_weekly = stock.command(
         option_names="symbol datatype",
         option_values=dict(
             function="TIME_SERIES_WEEKLY",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -149,8 +174,8 @@ stock_weekly_adjusted = stock.command(
         option_names="symbol datatype",
         option_values=dict(
             function="TIME_SERIES_WEEKLY",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -168,8 +193,8 @@ stock_monthly = stock.command(
         option_names="symbol datatype",
         option_values=dict(
             function="TIME_SERIES_MONTHLY",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
@@ -188,8 +213,8 @@ stock_monthly_adjusted = stock.command(
         option_names="symbol datatype",
         option_values=dict(
             function="TIME_SERIES_MONTHLY",
-            apikey=_key(),
         ),
+        api_key_func=_get_api_key,
     )
 )
 
