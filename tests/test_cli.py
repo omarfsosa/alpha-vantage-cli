@@ -5,7 +5,6 @@ import pytest
 
 from alpha_vantage_cli import cli
 
-
 groups = (
     "stock",
     "intel",

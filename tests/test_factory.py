@@ -31,11 +31,7 @@ def test_parse_options():
 
 
 def test_handle_values():
-    values = {
-        "symbol": "aapl",
-        "interval": "30",
-        "outputsize": "full"
-    }
+    values = {"symbol": "aapl", "interval": "30", "outputsize": "full"}
     handled = factory.handle_values(values)
     assert handled["symbol"].isupper()
     assert handled["interval"].endswith("min")
