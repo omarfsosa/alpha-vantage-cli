@@ -32,4 +32,4 @@ jobs:
           nox -s lint
       - name: Testing
         run: |
-          nox -s test-${{ matrix.python-version }}
+          nox -s tests-${{ matrix.python-version }}
