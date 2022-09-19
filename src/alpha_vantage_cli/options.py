@@ -6,6 +6,18 @@ symbol = click.argument(
     required=True,
 )
 
+from_symbol = click.argument(
+    "from_symbol",
+    type=str,
+    required=True,
+)
+
+to_symbol = click.argument(
+    "to_symbol",
+    type=str,
+    required=True,
+)
+
 interval = click.option(
     "--interval",
     "-i",

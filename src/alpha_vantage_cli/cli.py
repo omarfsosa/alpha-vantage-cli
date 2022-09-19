@@ -45,6 +45,8 @@ def set_key(key):
         ),
         abort=True,
     )
+
+    path_save.parent.mkdir(parents=True, exist_ok=True)
     credentials = {"key": key}
     with open(path_save, "w") as f:
         json.dump(credentials, f)
@@ -238,11 +240,84 @@ def data():
     """
 
 
+# --- Forex
 @cli.group()
 def forex():
     """
     Manages the Forex APIs (Not yet implemented)
     """
+
+
+forex_intraday = forex.command(
+    "intraday",
+    help="""
+    This API returns intraday time series (timestamp, open, high, low, close)
+    of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated realtime.
+    """,
+)(
+    factory.command_factory(
+        option_names="from_symbol to_symbol interval outputsize datatype",
+        option_values=dict(
+            function="FX_INTRADAY",
+        ),
+        api_key_func=_get_api_key,
+    )
+)
+
+
+forex_daily = forex.command(
+    "daily",
+    help="""
+    This API returns the daily time series (timestamp, open, high, low, close)
+    of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated realtime.
+    """,
+)(
+    factory.command_factory(
+        option_names="from_symbol to_symbol outputsize datatype",
+        option_values=dict(
+            function="FX_DAILY",
+        ),
+        api_key_func=_get_api_key,
+    )
+)
+
+
+forex_weekly = forex.command(
+    "weekly",
+    help="""
+    This API returns the weekly time series (timestamp, open, high, low, close)
+    of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated realtime.
+    The latest data point is the price information for the week (or partial
+    week) containing the current trading day, updated realtime.
+    """,
+)(
+    factory.command_factory(
+        option_names="from_symbol to_symbol datatype",
+        option_values=dict(
+            function="FX_WEEKLY",
+        ),
+        api_key_func=_get_api_key,
+    )
+)
+
+
+forex_monthly = forex.command(
+    "monthly",
+    help="""
+    This API returns the monthly time series (timestamp, open, high, low,
+    close) of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated
+    realtime. The latest data point is the price information for the month (or
+    partial month) containing the current trading day, updated realtime.
+    """,
+)(
+    factory.command_factory(
+        option_names="from_symbol to_symbol datatype",
+        option_values=dict(
+            function="FX_MONTHLY",
+        ),
+        api_key_func=_get_api_key,
+    )
+)
 
 
 @cli.group()
