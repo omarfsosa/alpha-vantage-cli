@@ -1,0 +1,17 @@
+stock quote ibm
+stock quote ibm --datatype=csv
+stock intraday ibm
+stock intraday ibm --datatype=csv --interval=30
+stock intraday ibm --adjusted
+stock daily ibm --datatype=csv
+stock daily-adjusted ibm --datatype=csv
+stock weekly ibm --datatype=csv
+stock weekly-adjusted ibm --datatype=csv
+stock monthly ibm --datatype=csv
+stock monthly-adjusted ibm --datatype=csv
+forex intraday usd gbp
+forex intraday usd gbp --datatype=csv --interval=60
+forex daily usd gbp
+forex daily usd gbp --datatype=csv
+forex weekly usd gbp
+forex monthly usd gbp --datatype=csv

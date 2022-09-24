@@ -3,6 +3,11 @@ import pytest
 from alpha_vantage_cli import factory
 
 
+@pytest.fixture
+def mock_requests_get(mocker):
+    return mocker.patch("requests.get")
+
+
 def test_make_query_string():
     query_fmt = factory.make_query_string(
         "param1",
@@ -25,6 +30,8 @@ def test_parse_options():
     assert result == ("symbol", "interval", "outputsize")
     result = factory.parse_options("symbol")
     assert result == ("symbol",)
+    result = factory.parse_options(["symbol", "interval", "outputsize"])
+    assert result == tuple(["symbol", "interval", "outputsize"])
 
     with pytest.raises(ValueError):
         factory.parse_options("symbol badname")
@@ -37,16 +44,30 @@ def test_handle_values():
     assert handled["interval"].endswith("min")
     assert values.keys() == handled.keys()
 
+    values = {"outputsize": "full"}
+    assert factory.handle_values(values) == values
 
-def test_command_factory():
-    option_names = "symbol interval"
+
+def test_command_factory(requests_mock):
+    option_names = "symbol interval datatype"
     option_values = {
         "function": "FUNCTION_NAME",
-        "apikey": "testkey",
     }
     command = factory.command_factory(
         option_names,
         option_values,
-        api_key_func=lambda: "",
+        api_key_func=lambda: "testkey",
     )
     assert callable(command)
+
+    # -- Mock the api responses:
+    url = (
+        "https://www.alphavantage.co/query?"
+        "function=FUNCTION_NAME&apikey=testkey&symbol=IBM&interval=60min"
+    )
+    requests_mock.get(url, json={"example": "mocked-response"})
+    requests_mock.get(url + "&datatype=csv", text="mocked-response")
+    result = command(symbol="ibm", interval="60", datatype="json")
+    assert result == {"example": "mocked-response"}
+    result = command(symbol="ibm", interval="60", datatype="csv")
+    assert result == "mocked-response"

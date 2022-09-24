@@ -1,3 +1,6 @@
+import pathlib
+import time
+
 import click.testing
 import pytest
 
@@ -44,12 +47,17 @@ def test_group_succeed(runner, group, mock_cli_get_api_key):
 
 
 # --- end-to-end tests (these are skipped by nox by default)
+args_file = pathlib.Path(__file__).parent / "args.txt"
+with open(args_file, "r") as f:
+    commands = f.read().splitlines()
+    commands = [c for c in commands if c.startswith("forex")]
+
+
 @pytest.mark.e2e
-def test_av_stock_quote_in_production_env(runner):
-    """
-    This test sends an actual request to Alpha Vantage
-    API and so it can fail for external reasons too.
-    """
-    result = runner.invoke(cli.stock_quote, args="ibm")
+@pytest.mark.parametrize("args", commands)
+def test_command(runner, args):
+    # assert True
+    result = runner.invoke(cli.cli, args=args)
     assert result.exit_code == 0
-    assert isinstance(result.output, str)
+    # Sleep 15 seconds to avoid clogging the API
+    time.sleep(15)

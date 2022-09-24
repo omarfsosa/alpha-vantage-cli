@@ -15,11 +15,12 @@ def _fixes(**kwargs) -> str:
 
 
 def _allows(*args) -> str:
-    return "&" + "&".join(f"{k!s}={{{k}}}" for k in args)
+    return "&".join(f"{k!s}={{{k}}}" for k in args)
 
 
 def make_query_string(*args, **kwargs) -> str:
-    return _base_url + _fixes(**kwargs) + _allows(*args)
+    suffix = "&".join([_fixes(**kwargs), _allows(*args)])
+    return _base_url + suffix
 
 
 def parse_options(names: OptionNames) -> tuple[str]:
@@ -32,6 +33,12 @@ def parse_options(names: OptionNames) -> tuple[str]:
     return tuple(names)
 
 
+class DataTypeError(Exception):
+    """
+    For when the datatype requested is not valid.
+    """
+
+
 def handle_values(d: dict[str, str]) -> dict[str, str]:
     if "symbol" in d:
         d["symbol"] = d["symbol"].upper()
@@ -40,6 +47,13 @@ def handle_values(d: dict[str, str]) -> dict[str, str]:
         d["interval"] = d["interval"] + "min"
 
     return d
+
+
+def build_query(query_fmt, api_key_func, **kwargs):
+    kwargs = handle_values(kwargs)
+    kwargs["apikey"] = api_key_func()
+    query = query_fmt.format(**kwargs)
+    return query
 
 
 def command_factory(
@@ -51,18 +65,20 @@ def command_factory(
     query_fmt = make_query_string("apikey", *names, **option_values)
 
     def command(**kwargs):
-        d = handle_values(kwargs)
-        d["apikey"] = api_key_func()
-        query = query_fmt.format(**d)
+        query = build_query(query_fmt, api_key_func, **kwargs)
+        datatype = kwargs.get("datatype")
         response = requests.get(query)
-        if d.get("datatype") == "json":
-            result = response.json()
-        elif d.get("datatype") == "csv":
-            result = response.text
-        else:
-            result = response
+        # TODO: Raise if response is not 200
 
-        click.echo(result)
+        if datatype is None or datatype.lower() == "json":
+            result = response.json()
+            click.echo(result)
+            return result
+
+        if datatype.lower() == "csv":
+            result = response.text
+            click.echo(result)
+            return result
 
     for name in reversed(names):
         decorator = getattr(options, name)
