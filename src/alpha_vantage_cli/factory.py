@@ -33,12 +33,6 @@ def parse_options(names: OptionNames) -> tuple[str]:
     return tuple(names)
 
 
-class DataTypeError(Exception):
-    """
-    For when the datatype requested is not valid.
-    """
-
-
 def handle_values(d: dict[str, str]) -> dict[str, str]:
     if "symbol" in d:
         d["symbol"] = d["symbol"].upper()
