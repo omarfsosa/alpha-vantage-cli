@@ -1,0 +1,101 @@
+name = "stock"
+help = "Manages the Core Stocks APIs"
+
+[intraday]
+help = """
+SYMBOL is the name of the equity of your choice. For example, IBM, AAPL"
+
+This API returns intraday time series of the equity specified, covering
+extended trading hours where applicable (e.g., 4:00am to 8:00pm Eastern
+Time for the US market). The intraday data is derived from the
+Securities Information Processor (SIP) market-aggregated data. You can
+query both raw (as-traded) and split/dividend-adjusted intraday data from
+this endpoint.
+
+This API returns the most recent 1-2 months of intraday data and is best
+suited for short-term/medium-term charting and trading strategy
+development. If you are targeting a deeper intraday history, please use
+the Extended Intraday API. This is cool"""
+options = "symbol interval adjusted outputsize datatype"
+function = "TIME_SERIES_INTRADAY"
+
+[quote]
+help = """
+Quote information for SYMBOL (IBM, AAPL, etc.).
+
+A lightweight alternative to the time series APIs, this service returns
+the price and volume information for a token of your choice.
+"""
+options = "symbol datatype"
+function = "GLOBAL_QUOTE"
+
+[daily]
+help = """
+Daily, as-traded time series data for SYMBOL
+
+This API returns raw (as-traded) daily time series (date, daily open,
+daily high, daily low, daily close, daily volume) of the global equity
+specified, covering 20+ years of historical data. If you are also
+interested in split/dividend-adjusted historical data, please use the
+daily-adjusted command, which covers adjusted close values and historical
+split and dividend events.
+"""
+options = "symbol outputsize datatype"
+function = "TIME_SERIES_DAILY"
+
+[daily-adjusted]
+help = """
+Daily adjusted, as-traded time series data for SYMBOL.
+
+This API returns raw (as-traded) daily open/high/low/close/volume values,
+daily adjusted close values, and historical split/dividend events of the
+global equity specified, covering 20+ years of historical data.
+"""
+options = "symbol outputsize datatype"
+function = "TIME_SERIES_DAILY_ADJUSTED"
+
+[weekly]
+help = """
+Weekly time series data for SYMBOL.
+
+This API returns weekly time series (last trading day of each week,
+weekly open, weekly high, weekly low, weekly close, weekly volume)
+of the global equity specified, covering 20+ years of historical data.
+"""
+options = "symbol datatype"
+function = "TIME_SERIES_WEEKLY"
+
+[weekly-adjusted]
+help = """
+Weekly adjusted time series data for SYMBOL.
+
+This API returns weekly adjusted time series (last trading day of each
+week, weekly open, weekly high, weekly low, weekly close, weekly adjusted
+close, weekly volume, weekly dividend) of the global equity specified,
+covering 20+ years of historical data.
+"""
+options = "symbol datatype"
+function = "TIME_SERIES_WEEKLY_ADJUSTED"
+
+[monthly]
+help = """
+Monthly time series data for SYMBOL.
+
+This API returns monthly time series (last trading day of each month,
+monthly open, monthly high, monthly low, monthly close, monthly volume)
+of the global equity specified, covering 20+ years of historical data.
+"""
+options = "symbol datatype"
+function = "TIME_SERIES_MONTHLY"
+
+[monthly-adjusted]
+help = """
+Monthly adjusted time series data for SYMBOL.
+
+This API returns monthly adjusted time series (last trading day of each
+month, monthly open, monthly high, monthly low, monthly close, monthly
+adjusted close, monthly volume, monthly dividend) of the equity specified,
+covering 20+ years of historical data.
+"""
+options = "symbol datatype"
+function = "TIME_SERIES_MONTHLY_ADJUSTED"

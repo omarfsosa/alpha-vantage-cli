@@ -30,6 +30,20 @@ interval = click.option(
     ),
 )
 
+econ_interval = click.option(
+    "--interval",
+    "-i",
+    type=click.Choice(["annual", "quarterly"]),
+    default="annual",
+)
+
+yield_interval = click.option(
+    "--interval",
+    "-i",
+    type=click.Choice(["daily", "weekly", "monthly"]),
+    default="monthly",
+)
+
 adjusted = click.option(
     "--adjusted/--no-adjusted",
     default=True,
@@ -59,3 +73,23 @@ datatype = click.option(
     value) file.
     """,
 )
+
+maturity = click.option(
+    "--maturity",
+    type=click.Choice(
+        [
+            "3month",
+            "2year",
+            "5year",
+            "7year",
+            "10year",
+            "30year",
+        ]
+    ),
+    default="10year",
+)
+
+option_name_to_query_name = {
+    "econ_interval": "interval",
+    "yield_interval": "interval",
+}

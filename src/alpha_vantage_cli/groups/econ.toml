@@ -1,0 +1,28 @@
+name = "econ"
+help = """
+APIs under this section provide key US economic indicators frequently used for investment strategy formulation and application development.
+
+Note: all the economic indicator data uses the FRED® API but is not endorsed or certified by the Federal Reserve Bank of St. Louis. By using our economic indicator APIs, you agree to be bound by the FRED® API Terms of Use.
+"""
+
+[gdp]
+help = """
+This API returns the annual and quarterly Real GDP of the United States.
+"""
+options = "econ_interval datatype"
+function = "REAL_GDP"
+
+
+[gdp-per-capita]
+help = """
+This API returns the quarterly Real GDP per Capita data of the United States.
+"""
+options = "datatype"
+function = "REAL_GDP_PER_CAPITA"
+
+[treasury-yield]
+help = """
+This API returns the daily, weekly, and monthly US treasury yield of a given maturity timeline (e.g., 5 year, 30 year, etc).
+"""
+options = "yield_interval maturity datatype"
+function = "TREASURY_YIELD"

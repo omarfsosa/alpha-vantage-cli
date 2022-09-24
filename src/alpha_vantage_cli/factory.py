@@ -27,9 +27,6 @@ def parse_options(names: OptionNames) -> tuple[str]:
     if isinstance(names, str):
         names = names.replace(",", " ").split()
 
-    if not all(hasattr(options, name) for name in names):
-        raise ValueError("Names must all be valid options")
-
     return tuple(names)
 
 
@@ -56,7 +53,12 @@ def command_factory(
     api_key_func: callable,
 ) -> callable:
     names = parse_options(option_names)
-    query_fmt = make_query_string("apikey", *names, **option_values)
+    arg_names = []
+    for name in names:
+        renamed = options.option_name_to_query_name.get(name, name)
+        arg_names.append(renamed)
+
+    query_fmt = make_query_string("apikey", *arg_names, **option_values)
 
     def command(**kwargs):
         query = build_query(query_fmt, api_key_func, **kwargs)

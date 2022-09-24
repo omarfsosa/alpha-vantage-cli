@@ -1,0 +1,38 @@
+name = "forex"
+help = "Manges the Forex API"
+
+[intraday]
+help = """
+This API returns intraday time series (timestamp, open, high, low, close)
+of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated realtime.
+"""
+options = "from_symbol to_symbol interval outputsize datatype"
+function = "FX_INTRADAY"
+
+[daily]
+help = """
+This API returns the daily time series (timestamp, open, high, low, close)
+of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated realtime.
+"""
+options = "from_symbol to_symbol datatype"
+function = "FX_DAILY"
+
+[weekly]
+help = """
+This API returns the weekly time series (timestamp, open, high, low, close)
+of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated realtime.
+The latest data point is the price information for the week (or partial
+week) containing the current trading day, updated realtime.
+"""
+options = "from_symbol to_symbol datatype"
+function = "FX_WEEKLY"
+
+[monthly]
+help = """
+This API returns the monthly time series (timestamp, open, high, low,
+close) of the FX currency pair FROM_SYMBOL-TO_SYMBOL specified, updated
+realtime. The latest data point is the price information for the month (or
+partial month) containing the current trading day, updated realtime.
+"""
+options = "from_symbol to_symbol datatype"
+function = "FX_MONTHLY"
