@@ -33,9 +33,6 @@ def test_parse_options():
     result = factory.parse_options(["symbol", "interval", "outputsize"])
     assert result == tuple(["symbol", "interval", "outputsize"])
 
-    with pytest.raises(ValueError):
-        factory.parse_options("symbol badname")
-
 
 def test_handle_values():
     values = {"symbol": "aapl", "interval": "30", "outputsize": "full"}

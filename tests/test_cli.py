@@ -8,12 +8,12 @@ from alpha_vantage_cli import cli
 
 groups = (
     "stock",
-    "intel",
-    "data",
+    # "intel",
+    # "data",
     "forex",
-    "crypto",
+    # "crypto",
     "econ",
-    "tech",
+    # "tech",
 )
 
 
@@ -41,8 +41,7 @@ def test_cli_succeed(runner, mock_cli_get_api_key):
 
 @pytest.mark.parametrize("group", groups)
 def test_group_succeed(runner, group, mock_cli_get_api_key):
-    command = getattr(cli, group)
-    result = runner.invoke(command)
+    result = runner.invoke(cli.cli, args=group + " --help")
     assert result.exit_code == 0
 
 
