@@ -7,7 +7,7 @@ Note: all the economic indicator data uses the FRED® API but is not endorsed or
 
 [gdp]
 help = """
-This API returns the annual and quarterly Real GDP of the United States.
+annual and quarterly Real GDP of the United States.
 """
 options = "econ_interval datatype"
 function = "REAL_GDP"
@@ -15,14 +15,77 @@ function = "REAL_GDP"
 
 [gdp-per-capita]
 help = """
-This API returns the quarterly Real GDP per Capita data of the United States.
+quarterly Real GDP per Capita data of the United States.
 """
 options = "datatype"
 function = "REAL_GDP_PER_CAPITA"
 
 [treasury-yield]
 help = """
-This API returns the daily, weekly, and monthly US treasury yield of a given maturity timeline (e.g., 5 year, 30 year, etc).
+daily, weekly, and monthly US treasury yield of a given maturity timeline (e.g., 5 year, 30 year, etc).
 """
 options = "yield_interval maturity datatype"
 function = "TREASURY_YIELD"
+
+[interest-rate]
+help = """
+daily, weekly, and monthly federal funds rate (interest rate) of the United States.
+"""
+options = "yield_interval datatype"
+function = "FEDERAL_FUNDS_RATE"
+
+[cpi]
+help = """
+monthly and semiannual consumer price index (CPI) of the United States. CPI is widely regarded as the barometer of inflation levels in the broader economy.
+"""
+options = "yield_interval_2 datatype"
+function = "CPI"
+
+[inflation]
+help = """
+annual inflation rates (consumer prices) of the United States.
+"""
+options = "datatype"
+function = "INFLATION"
+
+[inflation-expectation]
+help = """
+monthly inflation expectation data of the United States, as measured by the median expected price change next 12 months according to the Surveys of Consumers by University of Michigan (Inflation Expectation© [MICH]), retrieved from FRED, Federal Reserve Bank of St. Louis.
+"""
+options = "datatype"
+function = "INFLATION_EXPECTATION"
+
+[consumer-sentiment]
+help = """
+Monthly consumer sentiment and confidence data of the United States, as measured by the Surveys of Consumers by University of Michigan (Consumer Sentiment © [UMCSENT]), retrieved from FRED, Federal Reserve Bank of St. Louis.
+"""
+options = "datatype"
+function = "CONSUMER_SENTIMENT"
+
+[retail-sales]
+help = """
+Monthly Advance Retail Sales: Retail Trade data of the United States.
+"""
+options = "datatype"
+function = "RETAIL_SALES"
+
+[durables]
+help = """
+Monthly manufacturers' new orders of durable goods in the United States.
+"""
+options = "datatype"
+function = "DURABLES"
+
+[unemployment]
+help = """
+Monthly unemployment data of the United States. The unemployment rate represents the number of unemployed as a percentage of the labor force. Labor force data are restricted to people 16 years of age and older, who currently reside in 1 of the 50 states or the District of Columbia, who do not reside in institutions (e.g., penal and mental facilities, homes for the aged), and who are not on active duty in the Armed Forces (https://fred.stlouisfed.org/series/UNRATE).
+"""
+options = "datatype"
+function = "UNEMPLOYMENT"
+
+[nonfarm-payroll]
+help = """
+Monthly US All Employees: Total Nonfarm (commonly known as Total Nonfarm Payroll), a measure of the number of U.S. workers in the economy that excludes proprietors, private household employees, unpaid volunteers, farm employees, and the unincorporated self-employed.
+"""
+options = "datatype"
+function = "NONFARM_PAYROLL"

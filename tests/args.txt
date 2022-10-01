@@ -15,3 +15,9 @@ forex daily usd gbp
 forex daily usd gbp --datatype=csv
 forex weekly usd gbp
 forex monthly usd gbp --datatype=csv
+econ gdp
+econ gdp-per-capita --datatype=csv
+econ treasury-yield
+econ treasury-yield --maturity=5year --interval=monthly
+econ interest-rate
+econ interest-rate --interval="weekly"

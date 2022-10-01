@@ -44,6 +44,13 @@ yield_interval = click.option(
     default="monthly",
 )
 
+yield_interval_2 = click.option(
+    "--interval",
+    "-i",
+    type=click.Choice(["monthly", "semiannual"]),
+    default="monthly",
+)
+
 adjusted = click.option(
     "--adjusted/--no-adjusted",
     default=True,
@@ -92,4 +99,5 @@ maturity = click.option(
 option_name_to_query_name = {
     "econ_interval": "interval",
     "yield_interval": "interval",
+    "yield_interval_2": "interval",
 }
